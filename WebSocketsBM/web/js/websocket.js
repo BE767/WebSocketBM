@@ -1,6 +1,6 @@
 
 
-var serverIP = "192.168.100.20"; 
+var serverIP = "192.168.100.60"; 
 var wsURI = "ws://" + serverIP + ":8080/WebSocketsBM/chat";
 
 var websocket = new WebSocket(wsURI);

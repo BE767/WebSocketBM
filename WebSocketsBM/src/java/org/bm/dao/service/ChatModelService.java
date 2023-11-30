@@ -1,9 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-package org.bm.dao.service;
 
+package org.bm.dao.service;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -11,22 +7,22 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
-import bm.java.ws.model.MesaggeModel;
+import bm.java.ws.model.ChatModel;
 
 /**
  *
- * @author Evelyn
+ * @author Briseth
  */
-public class MessageModelService extends Conexion<MesaggeModel>
+
+public class ChatModelService extends Conexion<ChatModel>
 {
-    
-     public List<MesaggeModel> getMensahModelsList() 
+    public List<ChatModel> getMensahModelsList() 
      {  
-        List<MesaggeModel> mesaggeList =null;
+        List<ChatModel> chatModelslist =null;
         Connection connection = null;
         Statement statement = null;
         ResultSet resultSet = null;
-        MesaggeModel message = null;
+        ChatModel chat = null;
         try {
             connection = getConnection();
             if (connection == null) { 
@@ -36,32 +32,31 @@ public class MessageModelService extends Conexion<MesaggeModel>
             if (statement == null) {
                 return null;
             }
-            resultSet = statement.executeQuery("SELECT * FROM Mensaje");
+            resultSet = statement.executeQuery("SELECT * FROM Chat");
             if (resultSet == null) {
                 return null;
             }
-            mesaggeList = new ArrayList<>();
+            chatModelslist = new ArrayList<>();
             while (resultSet.next()) {
-                message = new MesaggeModel();
-                message.setMensajeID(resultSet.getInt("MensajeID"));
-                message.setChatID(resultSet.getInt("ChatID"));
-                message.setUserID(resultSet.getInt("UserID"));
-                message.setConten(resultSet.getString("Contenido"));
-                mesaggeList.add(message);
+                chat = new ChatModel();
+                chat.setChatID(resultSet.getInt("ChatID"));
+                chat.setPadreID(resultSet.getInt("PadreID"));
+                chat.setSoporteTecnicoID(resultSet.getInt("SoporteTecnicoID"));
+                chatModelslist.add(chat);
             }
             resultSet.close();
             closeConnection(connection);
-            return mesaggeList;
+            return chatModelslist;
         } catch (SQLException ex) {
             ex.printStackTrace();
         }
-        return mesaggeList; 
+        return chatModelslist; 
      }
-     
-     public boolean addEquipos(MesaggeModel message) {
+    
+     public boolean addChat(ChatModel message) {
         Connection connection = null;
         PreparedStatement preparedStatement = null;
-        String sql = "INSERT INTO Mensaje (ChatID, UserID,Contenido) VALUES (?, ?, ?)";
+        String sql = "INSERT INTO Chat (PadreID, SoporteTecnicoID) VALUES (?, ?)";
         int row = 0;
         try {
             connection = getConnection();
@@ -72,9 +67,8 @@ public class MessageModelService extends Conexion<MesaggeModel>
             if (preparedStatement == null) {
                 return false;
             }
-            preparedStatement.setInt(1, message.getChatID());
-            preparedStatement.setInt(2, message.getUserID());
-            preparedStatement.setString(3, message.getConten());
+            preparedStatement.setInt(1, message.getPadreID());
+            preparedStatement.setInt(2, message.getSoporteTecnicoID());
             row = preparedStatement.executeUpdate();
 
             closeConnection(connection);
@@ -84,5 +78,4 @@ public class MessageModelService extends Conexion<MesaggeModel>
         }
         return row < 0;
     }
-
 }

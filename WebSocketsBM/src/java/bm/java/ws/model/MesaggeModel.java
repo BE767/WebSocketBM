@@ -5,11 +5,38 @@
 package bm.java.ws.model;
 /**
  *
- * @author Jorge
+ * @author Evelyn
  */
 public class MesaggeModel {
-    private String conten;
+     private String conten;
      private String userName;
+     private int MensajeID;
+     private int UserID;
+     private int ChatID;
+
+    public int getMensajeID() {
+        return MensajeID;
+    }
+
+    public void setMensajeID(int MensajeID) {
+        this.MensajeID = MensajeID;
+    }
+
+    public int getUserID() {
+        return UserID;
+    }
+
+    public void setUserID(int UserID) {
+        this.UserID = UserID;
+    }
+
+    public int getChatID() {
+        return ChatID;
+    }
+
+    public void setChatID(int ChatID) {
+        this.ChatID = ChatID;
+    }
 
     public String getConten() {
         return conten;
@@ -26,6 +53,7 @@ public class MesaggeModel {
     public void setUserName(String userName) {
         this.userName = userName;
     }
+    
     
     @Override
     public String toString()
